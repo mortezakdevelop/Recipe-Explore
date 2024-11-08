@@ -2,12 +2,19 @@ package com.example.recipeexplore.di
 
 import com.example.recipeexplore.data.network.ApiServices
 import com.example.recipeexplore.urils.Constants
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.OkHttp
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import okio.Timeout
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 
@@ -21,10 +28,34 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(baseUrl:String): ApiServices =
+    fun provideGson():Gson = GsonBuilder().setLenient().create()
+
+    @Provides
+    @Singleton
+    fun provideNetworkTime() = Constants.CONNECTION_TIME
+
+    @Provides
+    @Singleton
+    fun provideInterceptor() = HttpLoggingInterceptor().apply {
+        level = HttpLoggingInterceptor.Level.BODY
+    }
+
+    @Provides
+    @Singleton
+    fun provideHttpClient(time:Long,interceptor:HttpLoggingInterceptor) = OkHttpClient.Builder()
+        .addInterceptor(interceptor)
+        .writeTimeout(time,TimeUnit.SECONDS)
+        .readTimeout(time,TimeUnit.SECONDS)
+        .connectTimeout(time,TimeUnit.SECONDS)
+        .build()
+
+    @Provides
+    @Singleton
+    fun provideRetrofit(baseUrl:String, gson:Gson, client:OkHttpClient): ApiServices =
         Retrofit.Builder()
             .baseUrl(baseUrl)
-            .addConverterFactory(GsonConverterFactory.create())
+            .client(client)
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
             .create(ApiServices::class.java)
 }
