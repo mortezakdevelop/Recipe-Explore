@@ -28,7 +28,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideGson():Gson = GsonBuilder().setLenient().create()
+    fun provideGson(): Gson = GsonBuilder().setLenient().create()
 
     @Provides
     @Singleton
@@ -42,16 +42,16 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideHttpClient(time:Long,interceptor:HttpLoggingInterceptor) = OkHttpClient.Builder()
+    fun provideHttpClient(time: Long, interceptor: HttpLoggingInterceptor) = OkHttpClient.Builder()
         .addInterceptor(interceptor)
-        .writeTimeout(time,TimeUnit.SECONDS)
-        .readTimeout(time,TimeUnit.SECONDS)
-        .connectTimeout(time,TimeUnit.SECONDS)
+        .writeTimeout(time, TimeUnit.SECONDS)
+        .readTimeout(time, TimeUnit.SECONDS)
+        .connectTimeout(time, TimeUnit.SECONDS)
         .build()
 
     @Provides
     @Singleton
-    fun provideRetrofit(baseUrl:String, gson:Gson, client:OkHttpClient): ApiServices =
+    fun provideRetrofit(baseUrl: String, gson: Gson, client: OkHttpClient): ApiServices =
         Retrofit.Builder()
             .baseUrl(baseUrl)
             .client(client)
