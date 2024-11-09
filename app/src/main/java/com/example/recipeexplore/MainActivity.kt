@@ -12,7 +12,6 @@ import io.github.inflationx.viewpump.ViewPumpContextWrapper
 
 class MainActivity : AppCompatActivity() {
 
-    // apiKey 03573bc48ac34b99bc9c09c84a1931d1
     private lateinit var binding: ActivityMainBinding
     private lateinit var navHost: NavHostFragment
 
