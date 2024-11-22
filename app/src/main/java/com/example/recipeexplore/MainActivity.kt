@@ -8,8 +8,10 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.fragment.NavHostFragment
 import com.example.recipeexplore.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.inflationx.viewpump.ViewPumpContextWrapper
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -32,3 +34,8 @@ class MainActivity : AppCompatActivity() {
 
     }
 }
+
+
+// add loading progress bar in login fragment
+// use regex for email in login fragment
+//update all project to flow

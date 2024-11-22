@@ -22,9 +22,9 @@ class RegisterViewModel @Inject constructor(
 
     fun callRegisterApi(apiKey:String, bodyRegister:RegisterRequest) =
         viewModelScope.launch(Dispatchers.IO) {
-            registerLiveData.value = NetworkState.Loading()
+            registerLiveData.postValue( NetworkState.Loading())
             val response = registerRepository.postRegister(apiKey,bodyRegister)
-            registerLiveData.value = NetworkResponseCode(response).generalNetworkResponse()
+            registerLiveData.postValue(NetworkResponseCode(response).generalNetworkResponse())
         }
 
 }
