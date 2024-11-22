@@ -81,15 +81,18 @@ class RegisterFragment : Fragment() {
         }
     }
 
-    private fun loadRegisterData(){
-        viewModel.registerLiveData.observe(viewLifecycleOwner){ response ->
-            when(response){
+    private fun loadRegisterData() {
+        viewModel.registerLiveData.observe(viewLifecycleOwner) { response ->
+            when (response) {
                 is NetworkState.Loading -> {
 
                 }
-                 is NetworkState.Success -> {
 
-                 }
+                is NetworkState.Success -> {
+                    response.data?.let { data ->
+                        viewModel.saveRegisterUserData(data.username.toString(),data.hash.toString())
+                    }
+                }
 
                 is NetworkState.Error -> {
                     response.message?.let { binding.root.showSnackBar(it) }

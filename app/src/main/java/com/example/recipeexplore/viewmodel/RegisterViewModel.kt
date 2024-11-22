@@ -16,15 +16,23 @@ import javax.inject.Inject
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
     private val registerRepository: RegisterRepository
-):ViewModel() {
+) : ViewModel() {
 
     val registerLiveData = MutableLiveData<NetworkState<RegisterResponse>>()
 
-    fun callRegisterApi(apiKey:String, bodyRegister:RegisterRequest) =
+    fun callRegisterApi(apiKey: String, bodyRegister: RegisterRequest) =
         viewModelScope.launch(Dispatchers.IO) {
-            registerLiveData.postValue( NetworkState.Loading())
-            val response = registerRepository.postRegister(apiKey,bodyRegister)
+            registerLiveData.postValue(NetworkState.Loading())
+            val response = registerRepository.postRegister(apiKey, bodyRegister)
             registerLiveData.postValue(NetworkResponseCode(response).generalNetworkResponse())
         }
 
+
+    fun saveRegisterUserData(username:String , hash: String) =
+        viewModelScope.launch {
+            registerRepository.saveRegisterUserData(username,hash)
+        }
+
+
+    val readRegisterUserData = registerRepository.readRegisterUserData
 }
