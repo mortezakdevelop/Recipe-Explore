@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import coil.load
 import com.example.recipeexplore.R
 import com.example.recipeexplore.databinding.FragmentRegisterBinding
@@ -91,6 +92,8 @@ class RegisterFragment : Fragment() {
                 is NetworkState.Success -> {
                     response.data?.let { data ->
                         viewModel.saveRegisterUserData(data.username.toString(),data.hash.toString())
+                        findNavController().popBackStack(R.id.registerFragment, true)
+                        findNavController().navigate(R.id.action_splashFragment_to_recipeFragment)
                     }
                 }
 
