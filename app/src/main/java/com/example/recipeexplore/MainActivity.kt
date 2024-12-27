@@ -6,6 +6,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.isVisible
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.recipeexplore.databinding.ActivityMainBinding
@@ -27,6 +28,26 @@ class MainActivity : AppCompatActivity() {
 
         binding.mainBottomNav.background = null
         binding.mainBottomNav.setupWithNavController(navHost.navController)
+
+        navHost.navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.splashFragment -> visibilityBottomBar(false)
+                R.id.splashFragment -> visibilityBottomBar(false)
+                else -> visibilityBottomBar(true)
+            }
+        }
+    }
+
+    private fun visibilityBottomBar(isVisibility: Boolean) {
+        binding.apply {
+            if (isVisibility) {
+                mainBottomAppbar.isVisible = true
+                fabMain.isVisible = true
+            } else {
+                mainBottomAppbar.isVisible = false
+                fabMain.isVisible = false
+            }
+        }
     }
 
     override fun onNavigateUp(): Boolean {

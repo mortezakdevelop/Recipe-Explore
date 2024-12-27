@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_popular"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_160mdp"
+        android:layout_marginHorizontal="@dimen/_4mdp"
+        android:layout_marginTop="@dimen/_4mdp"
+        app:cardElevation="@dimen/_4mdp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/img_popular"
+            tools:src="@tools:sample/avatars"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/app_name"
+            android:scaleType="centerCrop" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.8"
+            android:background="@drawable/bg_popular_view_pager" />
+    </com.google.android.material.card.MaterialCardView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_35mdp"
+        android:layout_marginHorizontal="@dimen/_24mdp"
+        android:layout_marginBottom="@dimen/_8mdp"
+        android:background="@drawable/description_popular_view_pager"
+        android:elevation="@dimen/_2mdp"
+        app:layout_constraintBottom_toBottomOf="@id/card_popular"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/card_popular"
+        app:layout_constraintTop_toBottomOf="@id/card_popular">
+
+        <TextView
+            android:id="@+id/tv_popular_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_10mdp"
+            android:drawablePadding="@dimen/_3mdp"
+            android:gravity="center"
+            android:textColor="@color/jacarta"
+            android:textSize="@dimen/_9font_mdp"
+            app:drawableStartCompat="@drawable/ic_coins"
+            app:drawableTint="@color/chineseYellow"
+            app:fontPath="fonts/atlas_bold.ttf"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="125$" />
+
+        <TextView
+            android:id="@+id/tv_popular_price"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="@dimen/_10mdp"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:textColor="@color/jacarta"
+            android:textSize="@dimen/_10font_mdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tv_popular_price"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Show recipe name" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

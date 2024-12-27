@@ -39,6 +39,7 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"
+        android:id="@+id/fab_main"
         android:contentDescription="@string/app_name"
         android:src="@drawable/ic_restaurant"
         app:backgroundTint="@color/jacarta"
