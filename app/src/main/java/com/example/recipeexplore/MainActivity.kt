@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
 import com.example.recipeexplore.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.inflationx.viewpump.ViewPumpContextWrapper
@@ -23,6 +24,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         navHost = supportFragmentManager.findFragmentById(R.id.navHost) as NavHostFragment
+
+        binding.mainBottomNav.background = null
+        binding.mainBottomNav.setupWithNavController(navHost.navController)
     }
 
     override fun onNavigateUp(): Boolean {
@@ -39,3 +43,4 @@ class MainActivity : AppCompatActivity() {
 // add loading progress bar in login fragment
 // use regex for email in login fragment
 //update all project to flow
+//work optional for fab butotn

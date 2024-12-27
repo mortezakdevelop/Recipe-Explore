@@ -10,4 +10,8 @@
     <string name="email_not_valid">Email is not valid</string>
     <string name="checkConnection">Check your internet connection</string>
     <string name="version">Version</string>
+    <string name="random">Random</string>
+    <string name="favorite">Favorite</string>
+    <string name="search">Search</string>
+    <string name="recipe">Recipe</string>
 </resources>

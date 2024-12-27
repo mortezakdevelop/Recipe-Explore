@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-
+    <!--Nav Host-->
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/navHost"
         android:name="androidx.navigation.fragment.NavHostFragment"
@@ -14,5 +13,46 @@
         android:layout_height="match_parent"
         app:defaultNavHost="true"
         app:navGraph="@navigation/nav_graph" />
+    <!--Bottom menu-->
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/mainBottomAppbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/white"
+        app:fabAnimationMode="scale"
+        app:fabCradleMargin="@dimen/_10mdp"
+        app:fabCradleRoundedCornerRadius="@dimen/_15mdp"
+        app:fabCradleVerticalOffset="@dimen/_10mdp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/mainBottomNav"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_15mdp"
+            app:itemIconTint="@color/item_bottom_navigation_color_selected"
+            app:itemTextColor="@color/item_bottom_navigation_color_selected"
+            app:labelVisibilityMode="selected"
+            app:menu="@menu/bottom_navigation_menu" />
+
+    </com.google.android.material.bottomappbar.BottomAppBar>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/ic_restaurant"
+        app:backgroundTint="@color/jacarta"
+        app:tint="@color/white"
+        app:layout_anchor="@id/mainBottomAppbar"
+        android:layout_height="wrap_content"/>
+<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/mainFabMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/ic_restaurant"
+        app:backgroundTint="@color/jacarta"
+        app:layout_anchor="@id/mainBottomAppbar"
+        app:tint="@color/white" />-->
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
