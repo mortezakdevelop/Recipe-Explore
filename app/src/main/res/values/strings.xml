@@ -15,4 +15,5 @@
     <string name="search">Search</string>
     <string name="recipe">Recipe</string>
     <string name="vegan">vegan\n</string>
+    <string name="headerInfo">header  info\n</string>
 </resources>
