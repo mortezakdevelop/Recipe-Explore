@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         navHost.navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.splashFragment -> visibilityBottomBar(false)
-                R.id.splashFragment -> visibilityBottomBar(false)
+                R.id.registerFragment -> visibilityBottomBar(false)
                 else -> visibilityBottomBar(true)
             }
         }

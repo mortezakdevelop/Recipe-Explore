@@ -14,4 +14,5 @@
     <string name="favorite">Favorite</string>
     <string name="search">Search</string>
     <string name="recipe">Recipe</string>
+    <string name="vegan">vegan\n</string>
 </resources>
