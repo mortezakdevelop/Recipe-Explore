@@ -21,27 +21,23 @@ import javax.inject.Inject
 
 @ActivityRetainedScoped
 class RegisterRepository @Inject constructor(
-    @ApplicationContext private val context: Context,
+    private val dataStore: DataStore<Preferences>,
     private val remoteDataSource: RemoteDataSource
 ) {
 
-    //data store
     private object StoredKey {
         val username = stringPreferencesKey(Constants.REGISTER_USERNAME)
         val hash = stringPreferencesKey(Constants.REGISTER_HASH)
     }
 
-    //create dataStore
-    private val Context.createDataStore: DataStore<Preferences> by preferencesDataStore(Constants.REGISTER_USER_INFO)
-
     suspend fun saveRegisterUserData(username: String, hash: String) {
-        context.createDataStore.edit {
+        dataStore.edit {
             it[StoredKey.username] = username
             it[StoredKey.hash] = hash
         }
     }
 
-    val readRegisterUserData: Flow<RegisterStoredModel> = context.createDataStore.data
+    val readRegisterUserData: Flow<RegisterStoredModel> = dataStore.data
         .catch { e ->
             if (e is IOException) {
                 emit(emptyPreferences())
@@ -51,7 +47,7 @@ class RegisterRepository @Inject constructor(
         }.map {
             val username = it[StoredKey.username] ?: ""
             val hash = it[StoredKey.hash] ?: ""
-            RegisterStoredModel(username,hash)
+            RegisterStoredModel(username, hash)
         }
 
     suspend fun postRegister(apiKey: String, body: RegisterRequest) =

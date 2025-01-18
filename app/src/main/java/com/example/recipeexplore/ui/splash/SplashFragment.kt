@@ -39,16 +39,17 @@ class SplashFragment : Fragment() {
         binding.apply {
             bgSplash.load(R.drawable.bg_splash)
 
-            lifecycleScope.launch {
-                delay(2500)
-                viewModel.readRegisterUserData.asLiveData().observe(viewLifecycleOwner){
+            viewLifecycleOwner.lifecycleScope.launch {
+                delay(2500) // تأخیر برای نمایش اسپلش
+                viewModel.readRegisterUserData.asLiveData().observe(viewLifecycleOwner) { userData ->
+                    if (isAdded && findNavController().currentDestination?.id == R.id.splashFragment) {
+                        findNavController().popBackStack(R.id.splashFragment, true)
 
-                    findNavController().popBackStack(R.id.splashFragment, true)
-
-                    if (it.username.isNotEmpty()){
-                        findNavController().navigate(R.id.action_splashFragment_to_recipeFragment)
-                    }else{
-                        findNavController().navigate(R.id.action_splashFragment_to_registerFragment)
+                        if (userData.username.isNotEmpty()) {
+                            findNavController().navigate(R.id.action_splashFragment_to_recipeFragment)
+                        } else {
+                            findNavController().navigate(R.id.action_splashFragment_to_registerFragment)
+                        }
                     }
                 }
             }
