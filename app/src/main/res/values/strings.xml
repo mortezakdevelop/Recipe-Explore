@@ -16,4 +16,5 @@
     <string name="recipe">Recipe</string>
     <string name="vegan">vegan\n</string>
     <string name="headerInfo">header  info\n</string>
+    <string name="hello">Hello</string>
 </resources>

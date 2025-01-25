@@ -64,4 +64,5 @@ class MainActivity : AppCompatActivity() {
 // add loading progress bar in login fragment
 // use regex for email in login fragment
 //update all project to flow
-//work optional for fab butotn
+//work optional for fab button
+//do not use serialize name in models
