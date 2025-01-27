@@ -9,4 +9,8 @@ class RemoteDataSource @Inject constructor(
 ) {
     suspend fun postRegister(apiKey: String, body: RegisterRequest) =
         apiServices.postRegister(apiKey, body)
+
+    suspend fun getRecipes(apiKey: String, queries: Map<String, String>) =
+         apiServices.getRecipes(apiKey,queries)
+
 }

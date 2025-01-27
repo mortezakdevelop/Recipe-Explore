@@ -20,7 +20,7 @@ interface ApiServices {
     ): Response<RegisterResponse>
 
     @GET("recipes/complexSearch")
-    suspend fun getRecipes(@QueryMap queries: Map<String, String>): Response<ResponseRecipes>
+    suspend fun getRecipes(@Query(API_KEY) apiKey: String,@QueryMap queries: Map<String, String>): Response<ResponseRecipes>
 
     @GET("planetary/apod")
     suspend fun getApod(

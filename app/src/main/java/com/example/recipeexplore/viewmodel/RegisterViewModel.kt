@@ -3,7 +3,7 @@ package com.example.recipeexplore.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.recipeexplore.data.repository.RegisterRepository
+import com.example.recipeexplore.repository.RegisterRepository
 import com.example.recipeexplore.models.register.RegisterRequest
 import com.example.recipeexplore.models.register.RegisterResponse
 import com.example.recipeexplore.urils.NetworkResponseCode
