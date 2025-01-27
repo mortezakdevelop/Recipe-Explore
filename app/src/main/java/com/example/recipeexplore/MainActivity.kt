@@ -2,24 +2,14 @@ package com.example.recipeexplore
 
 import android.content.Context
 import android.os.Bundle
-import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.navOptions
 import androidx.navigation.ui.setupWithNavController
 import com.example.recipeexplore.databinding.ActivityMainBinding
-import com.example.recipeexplore.ui.favorite.FavoriteFragment
-import com.example.recipeexplore.ui.random.RandomFragment
-import com.example.recipeexplore.ui.recipe.RecipeFragment
-import com.example.recipeexplore.ui.search.SearchFragment
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.inflationx.viewpump.ViewPumpContextWrapper
 
@@ -27,68 +17,52 @@ import io.github.inflationx.viewpump.ViewPumpContextWrapper
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private var backPressedTime: Long = 0 // زمان آخرین فشار دکمه‌ی بک
+    private lateinit var navHost: NavHostFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        findViewById<BottomNavigationView>(R.id.mainBottomNav).selectedItemId = R.id.recipeFragment
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.navHost) as NavHostFragment
-        val navController = navHostFragment.navController
-        binding.mainBottomNav.setupWithNavController(navController)
+        navHost = supportFragmentManager.findFragmentById(R.id.navHost) as NavHostFragment
 
-        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                val currentDestination = navController.currentDestination?.id
+        binding.mainBottomNav.background = null
+        binding.mainBottomNav.setupWithNavController(navHost.navController)
 
-                when (currentDestination) {
-                    R.id.recipeFragment -> {
-                        // نمایش پیام تأیید خروج
-                        if (backPressedTime + 2000 > System.currentTimeMillis()) {
-                            finish()
-                        } else {
-                            Toast.makeText(
-                                this@MainActivity,
-                                "برای خروج دوباره کلیک کنید",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                        backPressedTime = System.currentTimeMillis()
-                    }
-
-                    R.id.searchFragment, R.id.randomFragment, R.id.favoriteFragment -> {
-                        // اگر در یکی از این صفحات هستیم، به صفحه recipeFragment برگردیم
-                        binding.mainBottomNav.selectedItemId = R.id.recipeFragment
-                        navController.navigate(R.id.recipeFragment)
-                    }
-
-                    else -> {
-                        // اگر در صفحات دیگر بودیم، به صفحه‌ی قبلی بازگردیم
-                        navController.popBackStack()
-                    }
-                }
+        navHost.navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.splashFragment -> visibilityBottomBar(false)
+                R.id.registerFragment -> visibilityBottomBar(false)
+                else -> visibilityBottomBar(true)
             }
-        })
-    }
-
-
-    private fun visibilityBottomBar(isVisible: Boolean) {
-        binding.apply {
-            mainBottomAppbar.isVisible = isVisible
-            fabMain.isVisible = isVisible
         }
     }
 
-   /* override fun attachBaseContext(newBase: Context) {
+    private fun visibilityBottomBar(isVisibility: Boolean) {
+        binding.apply {
+            if (isVisibility) {
+                mainBottomAppbar.isVisible = true
+                fabMain.isVisible = true
+            } else {
+                mainBottomAppbar.isVisible = false
+                fabMain.isVisible = false
+            }
+        }
+    }
+
+    override fun onNavigateUp(): Boolean {
+        return navHost.navController.navigateUp() || super.onNavigateUp()
+    }
+
+    override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase))
-    }*/
+
+    }
 }
 
 
 // add loading progress bar in login fragment
 // use regex for email in login fragment
 //update all project to flow
-//work optional for fab butotn
+//work optional for fab button
+//do not use serialize name in models

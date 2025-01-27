@@ -13,10 +13,13 @@ import androidx.navigation.fragment.findNavController
 import coil.load
 import com.example.recipeexplore.R
 import com.example.recipeexplore.databinding.FragmentSplashBinding
+import com.example.recipeexplore.models.register.RegisterRequest
+import com.example.recipeexplore.urils.Constants
 import com.example.recipeexplore.viewmodel.RegisterViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class SplashFragment : Fragment() {
@@ -24,7 +27,8 @@ class SplashFragment : Fragment() {
     private lateinit var binding:FragmentSplashBinding
     private val viewModel : RegisterViewModel by viewModels()
 
-
+    @Inject
+    lateinit var registerRequest: RegisterRequest
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -39,17 +43,18 @@ class SplashFragment : Fragment() {
         binding.apply {
             bgSplash.load(R.drawable.bg_splash)
 
-            viewLifecycleOwner.lifecycleScope.launch {
-                delay(2500) // تأخیر برای نمایش اسپلش
-                viewModel.readRegisterUserData.asLiveData().observe(viewLifecycleOwner) { userData ->
-                    if (isAdded && findNavController().currentDestination?.id == R.id.splashFragment) {
-                        findNavController().popBackStack(R.id.splashFragment, true)
+            viewModel.callRegisterApi(Constants.PROJECT_API_KEY, registerRequest)
 
-                        if (userData.username.isNotEmpty()) {
-                            findNavController().navigate(R.id.action_splashFragment_to_recipeFragment)
-                        } else {
-                            findNavController().navigate(R.id.action_splashFragment_to_registerFragment)
-                        }
+            lifecycleScope.launch {
+                delay(2500)
+                viewModel.readRegisterUserData.asLiveData().observe(viewLifecycleOwner){
+
+                    findNavController().popBackStack(R.id.splashFragment, true)
+
+                    if (it.username.isNotEmpty()){
+                        findNavController().navigate(R.id.action_splashFragment_to_recipeFragment)
+                    }else{
+                        findNavController().navigate(R.id.action_splashFragment_to_registerFragment)
                     }
                 }
             }

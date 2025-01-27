@@ -1,5 +1,6 @@
 package com.example.recipeexplore.di
 
+import com.example.recipeexplore.adapter.PopularAdapter
 import com.example.recipeexplore.models.register.RegisterRequest
 import dagger.Module
 import dagger.Provides
